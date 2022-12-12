@@ -1,0 +1,15 @@
+Visual authentication: Multiple rooms, each room has a separate list of authenticated people who can enter. Authenticate people using a camera.
+
+
+Laser detection//pi
+
+Resim ve ses gönderme//pi—Emre
+
+Sesi işlemlerden geçirme(// background yok et, ne zaman konuşuyor anla)server – Özge
+
+Kişi tanıma // server 
+Deep learning —cem
+
+Feedback to human//led yakma en son
+
+“Hello X” 
