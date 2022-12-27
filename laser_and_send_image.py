@@ -1,7 +1,25 @@
 #Libraries
 import RPi.GPIO as GPIO
 import time
- 
+import requests as re
+import json 
+import base64
+import numpy as np
+from picamera2 import Picamera2, Preview
+import yaml
+import cv2
+import matplotlib.image as mpimg
+from PIL import Image
+ip = "172.22.5.242"
+picam2 = Picamera2()
+
+preview_config = picam2.create_preview_configuration(main={"size": (1920, 1080)})
+picam2.configure(preview_config)
+
+picam2.start_preview(Preview.QTGL)
+
+picam2.start()
+
 #GPIO Mode (BOARD / BCM)
 GPIO.setmode(GPIO.BCM)
  
@@ -45,8 +63,14 @@ if __name__ == '__main__':
             dist = distance()
             print ("Measured Distance = %.1f cm" % dist)
             time.sleep(1)
-
-        # Reset by pressing CTRL + C
+            if(dist<10):
+                picam2.capture_file("tmp.jpg")
+                time.sleep(5) 
+                try:    
+                    time.sleep(2)   
+                    returned_img= re.post("http://"+ip+":5000/end_point_1a", files={'image': open('tmp.jpg', 'rb')}) 
+                except:
+                    print("Network error")
     except KeyboardInterrupt:
         print("Measurement stopped by User")
         GPIO.cleanup()

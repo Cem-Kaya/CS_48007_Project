@@ -7,7 +7,6 @@ import base64
 import numpy as np
 from picamera2 import Picamera2, Preview
 import yaml
-import cv2
 import matplotlib.image as mpimg
 from PIL import Image
 ip = "172.22.5.242"
