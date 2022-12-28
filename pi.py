@@ -29,7 +29,24 @@ GPIO_ECHO = 21
 #set GPIO direction (IN / OUT)
 GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
 GPIO.setup(GPIO_ECHO, GPIO.IN)
- 
+def callback(sound):
+    if GPIO.input(sound):
+        print("Sound Detected!")
+        time.sleep(3)
+        print("You can talk after 5 seconds...")
+        time.sleep(1)
+        print("You can talk after 4 seconds...")
+        time.sleep(1)
+        print("You can talk after 3 seconds...")
+        time.sleep(1)
+        print("You can talk after 2 seconds...")
+        time.sleep(1)
+        print("You can talk after 1 seconds...")
+        time.sleep(1)
+        print("You can talk now...")
+        # GPIO.output(led,HIGH)
+    else:
+        print("Sound Detected! else ")
 def distance():
     # set Trigger to HIGH
     GPIO.output(GPIO_TRIGGER, True)
@@ -67,7 +84,21 @@ if __name__ == '__main__':
                 time.sleep(5) 
                 try:    
                     time.sleep(2)   
-                    returned_img= re.post("http://"+ip+":5000/end_point_1a", files={'image': open('tmp.jpg', 'rb')}) 
+                    is_it_us= re.post("http://"+ip+":5000/end_point_1a", files={'image': open('tmp.jpg', 'rb')})
+                    if(is_it_us=="true"):
+                        sound = 17
+                        led = 27
+
+                        GPIO.setmode(GPIO.BCM)
+                        GPIO.setup(sound, GPIO.IN)
+                        GPIO.setup(led, GPIO.OUT)
+                        GPIO.add_event_detect(sound, GPIO.BOTH, bouncetime=300)
+                        # assign function to GPIO PIN, Run function on change
+                        GPIO.add_event_callback(sound, callback)
+
+                        # infinite loop
+                        while GPIO.input(sound)==False:
+                            time.sleep(1)
                 except:
                     print("Network error")
     except KeyboardInterrupt:
