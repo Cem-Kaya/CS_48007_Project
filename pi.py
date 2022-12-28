@@ -89,23 +89,27 @@ if __name__ == '__main__':
                     print("is_it_us ",is_it_us)
                     is_it_truly_us=is_it_us.text
                     print("is_it_truly_us ",is_it_truly_us)
-                    if(is_it_truly_us=="true"):
-                        print("in second while")
-                        print(" is it false",GPIO.input(sound))
-                        sound = 17
-                        led = 27
-
-                        GPIO.setmode(GPIO.BCM)
-                        GPIO.setup(sound, GPIO.IN)
-                        GPIO.setup(led, GPIO.OUT)
-                        GPIO.add_event_detect(sound, GPIO.BOTH, bouncetime=300)
-                        # assign function to GPIO PIN, Run function on change
-                        GPIO.add_event_callback(sound, callback)
-
-                        # infinite loop
-                        while GPIO.input(sound)==False:
+                    try:
+                        if(is_it_truly_us=="true"):
                             print("in second while")
-                            time.sleep(1)
+                            print(" is it false",GPIO.input(sound))
+                            sound = 17
+                            led = 27
+
+                            GPIO.setmode(GPIO.BCM)
+                            GPIO.setup(sound, GPIO.IN)
+                            GPIO.setup(led, GPIO.OUT)
+                            GPIO.add_event_detect(sound, GPIO.BOTH, bouncetime=300)
+                            # assign function to GPIO PIN, Run function on change
+                            GPIO.add_event_callback(sound, callback)
+
+                            # infinite loop
+                            while GPIO.input(sound)==False:
+                                print("in second while")
+                                time.sleep(1)
+                    except Exception as e:
+                        print("expection is ..... ", e)
+                            
                 except:
                     print("Network error")
     except KeyboardInterrupt:
