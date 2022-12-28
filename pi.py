@@ -102,6 +102,7 @@ if __name__ == '__main__':
                     print("is_it_truly_us ",is_it_truly_us)
                     try:
                         if(is_it_truly_us=="true"):
+                            GPIO.cleanup()
                             print("in second while")
                             sound = 17
                             led = 27
@@ -120,6 +121,7 @@ if __name__ == '__main__':
                             while GPIO.input(sound)==0:
                                 print("in second while")
                                 time.sleep(1)
+                            GPIO.cleanup()
                             form_1 = pyaudio.paInt16 # 16-bit resolution
                             chans = 1 # 1 channel
                             samp_rate = 44100 # 44.1kHz sampling rate
