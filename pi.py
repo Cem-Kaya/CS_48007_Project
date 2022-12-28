@@ -126,8 +126,8 @@ if __name__ == '__main__':
                             chans = 1 # 1 channel
                             samp_rate = 44100 # 44.1kHz sampling rate
                             chunk = 4096 # 2^12 samples for buffer
-                            record_secs = 3 # seconds to record
-                            dev_index = 2 # device index found by p.get_device_info_by_index(ii)
+                            record_secs = 18 # seconds to record
+                            dev_index = 1# device index found by p.get_device_info_by_index(ii)
                             wav_output_filename = 'test1.wav' # name of .wav file
 
                             audio = pyaudio.PyAudio() # create pyaudio instantiation
@@ -159,7 +159,7 @@ if __name__ == '__main__':
                             wavefile.writeframes(b''.join(frames))
                             wavefile.close()
                             try:    
-                                print( re.post("http://"+ip+":5000/end_point_3", files={'sound': open('sound.wav', 'rb')}) ) 
+                                print( re.post("http://"+ip+":5000/end_point_3", files={'sound': open('test1.wav', 'rb')}) ) 
                                 time.sleep(2) 
                             except Exception as e:
                                 print("this expect is !!!!!! ",e)
