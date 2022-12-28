@@ -84,7 +84,7 @@ if __name__ == '__main__':
                 time.sleep(5) 
                 try:    
                     time.sleep(2)   
-                    is_it_us= re.post("http://"+ip+":5000/end_point_1a", files={'image': open('tmp.jpg', 'rb')})
+                    is_it_us= re.post("http://"+ip+":5000/end_point_1a", files={'image': open('tmp.jpg', 'rb')}).text
                     print("is_it_us ",is_it_us)
                     if(is_it_us=="true"):
                         print("in i")
