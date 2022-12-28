@@ -84,10 +84,13 @@ if __name__ == '__main__':
                 time.sleep(5) 
                 try:    
                     time.sleep(2)   
-                    is_it_us= re.post("http://"+ip+":5000/end_point_1a", files={'image': open('tmp.jpg', 'rb')}).text
+                    print("it is trying")
+                    is_it_us= re.post("http://"+ip+":5000/end_point_1a", files={'image': open('tmp.jpg', 'rb')})
                     print("is_it_us ",is_it_us)
-                    if(is_it_us=="true"):
-                        print("in i")
+                    is_it_truly_us=is_it_us.text
+                    print("is_it_truly_us ",is_it_truly_us)
+                    if(is_it_truly_us=="true"):
+                        print("in second while")
                         print(" is it false",GPIO.input(sound))
                         sound = 17
                         led = 27
