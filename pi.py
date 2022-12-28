@@ -92,9 +92,10 @@ if __name__ == '__main__':
                     try:
                         if(is_it_truly_us=="true"):
                             print("in second while")
-                            print(" is it false",GPIO.input(sound))
                             sound = 17
                             led = 27
+                            print(" is it false",GPIO.input(sound))
+                           
 
                             GPIO.setmode(GPIO.BCM)
                             GPIO.setup(sound, GPIO.IN)
