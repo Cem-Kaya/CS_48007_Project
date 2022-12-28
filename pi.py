@@ -75,6 +75,15 @@ def distance():
 if __name__ == '__main__':
     try:
         while True:
+            GPIO.setmode(GPIO.BCM)
+ 
+            #set GPIO Pins
+            GPIO_TRIGGER = 18
+            GPIO_ECHO = 21
+            
+            #set GPIO direction (IN / OUT)
+            GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
+            GPIO.setup(GPIO_ECHO, GPIO.IN)
             print("in the while")
             dist = distance()
             print ("Measured Distance = %.1f cm" % dist)
@@ -94,7 +103,7 @@ if __name__ == '__main__':
                             print("in second while")
                             sound = 17
                             led = 27
-                            print(" is it false",GPIO.input(sound))
+                            
                            
 
                             GPIO.setmode(GPIO.BCM)
@@ -103,6 +112,7 @@ if __name__ == '__main__':
                             GPIO.add_event_detect(sound, GPIO.BOTH, bouncetime=300)
                             # assign function to GPIO PIN, Run function on change
                             GPIO.add_event_callback(sound, callback)
+                            print(" is it false",GPIO.input(sound))
 
                             # infinite loop
                             while GPIO.input(sound)==False:
