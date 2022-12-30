@@ -22,6 +22,7 @@ picam2.start_preview(Preview.QTGL)
 picam2.start()
 
 #GPIO Mode (BOARD / BCM)
+GPIO.cleanup()
 GPIO.setmode(GPIO.BCM)
  
 #set GPIO Pins
@@ -109,7 +110,7 @@ if __name__ == '__main__':
                             led = 27
                             
                            
-
+                            GPIO.cleanup()
                             GPIO.setmode(GPIO.BCM)
                             GPIO.setup(sound, GPIO.IN)
                             GPIO.setup(led, GPIO.OUT)
