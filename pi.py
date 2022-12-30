@@ -11,7 +11,7 @@ import matplotlib.image as mpimg
 from PIL import Image
 import pyaudio
 import wave
-ip = "172.22.5.242"
+ip = "172.22.156.89"
 picam2 = Picamera2()
 
 preview_config = picam2.create_preview_configuration(main={"size": (1920, 1080)})
