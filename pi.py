@@ -120,7 +120,7 @@ if __name__ == '__main__':
 
                             # infinite loop
                             while GPIO.input(sound)==0:
-                                print("in second while")
+                                print("please make a sound so we know you are ready to say the password")
                                 time.sleep(1)
                             GPIO.cleanup()
                             form_1 = pyaudio.paInt16 # 16-bit resolution
