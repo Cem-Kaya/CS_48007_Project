@@ -101,7 +101,8 @@ if __name__ == '__main__':
                     is_it_truly_us=is_it_us.text
                     print("is_it_truly_us ",is_it_truly_us)
                     try:
-                        if(is_it_truly_us=="true"):
+                        if("emre" in is_it_truly_us or "cem" in is_it_truly_us or "onur" in is_it_truly_us  ):
+                            print("welcome: ", is_it_truly_us, " now we will take the password please wait ")
                             GPIO.cleanup()
                             print("in second while")
                             sound = 17
