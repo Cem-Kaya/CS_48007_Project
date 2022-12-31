@@ -212,7 +212,7 @@ if __name__ == '__main__':
                                         
                                         GPIO.setwarnings(False) # Ignore warning for now
                                         GPIO.cleanup()
-                                        time.sleep()
+                                        time.sleep(1)
     
                                         GPIO.setup(GPIO_LED1, GPIO.OUT, initial=GPIO.LOW) 
                                         GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
