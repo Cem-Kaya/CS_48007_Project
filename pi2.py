@@ -107,7 +107,7 @@ if __name__ == '__main__':
                     try:
                         if("emre" in is_it_truly_us or "cem" in is_it_truly_us or "onur" in is_it_truly_us  ):
                             print("welcome: ", is_it_truly_us, " now we will take the password please wait ")
-                            GPIO.setwarnings(False)
+                            #GPIO.setwarnings(False)
                             
                             GPIO.setwarnings(False)
                             print("in second while")
@@ -168,7 +168,7 @@ if __name__ == '__main__':
                                 if(pass_check=="true"):
                                     if("emre" in is_it_truly_us):
                                         print("led1")
-                                        
+                                        GPIO.cleanup()
                                         GPIO.setwarnings(False) # Ignore warning for now
                                         GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
                                         GPIO.setup(GPIO_LED1, GPIO.OUT, initial=GPIO.LOW) 
@@ -178,11 +178,16 @@ if __name__ == '__main__':
                                         time.sleep(1) # Sleep for 1 second
                                     elif("cem" in is_it_truly_us):
                                         time.sleep(1) # Sleep for 1 second
+                                        print("led starting")
+                                        GPIO.cleanup()
                                         GPIO.setwarnings(False) # Ignore warning for now
+                                        print("led cont2")
                                         GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
+                                        print("led cont3")
                                         GPIO.setup(GPIO_LED2, GPIO.OUT, initial=GPIO.LOW) # Set pin 8 to be an output pin and >
+                                        print("led cont4")
                                         GPIO.output(GPIO_LED2, GPIO.HIGH) # Turn on
-                                        
+                                        print("led cont5")
                                         GPIO.setwarnings(False)
                                         time.sleep(1) # Sleep for 1 second
                                         print("led2")
