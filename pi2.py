@@ -112,7 +112,6 @@ if __name__ == '__main__':
            
             GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
             GPIO.setup(GPIO_ECHO, GPIO.IN)
-            print("in the while")
             dist = distance()
             print ("Measured Distance = %.1f cm" % dist)
             time.sleep(1)
@@ -132,7 +131,7 @@ if __name__ == '__main__':
                             #GPIO.setwarnings(False)
                             
                             GPIO.setwarnings(False)
-                            print("in second while")
+                          
                             sound = 15
                             
                             
@@ -142,7 +141,7 @@ if __name__ == '__main__':
                             GPIO.setup(sound, GPIO.IN)
                             while True:
                                 if GPIO.input(sound):
-                                    print("Sound Detected!")
+                                    print("Sound Detected now we will record you for your password!")
                                     break
                                     # GPIO.output(led,HIGH)
                                 else:
@@ -191,7 +190,7 @@ if __name__ == '__main__':
                             try:    
                                 pass_check= re.post("http://"+ip+":5000/end_point_3", files={'sound': open('test1.wav', 'rb')}) 
                                 time.sleep(2) 
-                                print("pass_check" + pass_check.text)
+                                
                                 if(pass_check.text=="true"):
                                     if("emre" in is_it_truly_us):
                                         print("led1")
@@ -204,27 +203,28 @@ if __name__ == '__main__':
                                         GPIO.setup(GPIO_LED2, GPIO.OUT, initial=GPIO.LOW) 
                                         GPIO.setup(GPIO_LED1, GPIO.OUT, initial=GPIO.LOW) 
                                         GPIO.output(GPIO_LED1, GPIO.HIGH) # Turn on
-                                        print("led1")
+                                        print("now you can see your led, ", is_it_truly_us)
+                                        time.sleep(10)
 
-                                        time.sleep(1) # Sleep for 1 second
+                                        time.sleep(10) # Sleep for 1 second
                                     elif("cem" in is_it_truly_us):
                                         time.sleep(1) # Sleep for 1 second
-                                        print("led starting")
                                         
                                         GPIO.setwarnings(False) # Ignore warning for now
                                         GPIO.cleanup()
                                         time.sleep()
-                                        print("led cont2")
+    
                                         GPIO.setup(GPIO_LED1, GPIO.OUT, initial=GPIO.LOW) 
                                         GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
-                                        print("led cont3")
+                                        
                                         GPIO.setup(GPIO_LED2, GPIO.OUT, initial=GPIO.LOW) # Set pin 8 to be an output pin and >
-                                        print("led cont4")
+                                      
                                         GPIO.output(GPIO_LED2, GPIO.HIGH) # Turn on
-                                        print("led cont5")
+                                        
                                         GPIO.setwarnings(False)
-                                        time.sleep(1) # Sleep for 1 second
-                                        print("led2")
+                                        print("now you can see your led, ", is_it_truly_us)
+                                        time.sleep(10) # Sleep for 1 second
+                                       
                                     elif("onur" in is_it_truly_us):
                                         time.sleep(1) # Sleep for 1 second
                                         GPIO.setwarnings(False) # Ignore warning for now
@@ -243,14 +243,14 @@ if __name__ == '__main__':
                                         GPIO.setwarnings(False)
                                         time.sleep(1) # Sleep for 1 second
                                 else:
-                                    print("wrong PASSWORD")  
+                                    print("wrong PASSWORD , it was password ")  
                             except Exception as e:
-                                print("this expect is !!!!!! ",e)
+                                print("this expect is !!!",e)
                         else:
-                            print("I do not know you")
+                            print("I do not know you , you have not been registered")
                             GPIO.cleanup()
                     except Exception as e:
-                        print("expection is ..... ", e)
+                        print("expection is ....", e)
                             
                 except:
                     print("Network error")
