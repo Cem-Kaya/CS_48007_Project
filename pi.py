@@ -162,7 +162,7 @@ if __name__ == '__main__':
                             wavefile.writeframes(b''.join(frames))
                             wavefile.close()
                             try:    
-                                pass_check= re.post("http://"+ip+":5000/end_point_3", files={'sound': open('test1.wav', 'rb')}) ) 
+                                pass_check= re.post("http://"+ip+":5000/end_point_3", files={'sound': open('test1.wav', 'rb')}) 
                                 time.sleep(2) 
                                 if(pass_check=="true"):
                                     if("emre" in is_it_truly_us):
