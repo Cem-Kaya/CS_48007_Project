@@ -23,7 +23,7 @@ import pyaudio
 # Define our error handler type
 ERROR_HANDLER_FUNC = CFUNCTYPE(None, c_char_p, c_int, c_char_p, c_int, c_char_p)
 def py_error_handler(filename, line, function, err, fmt):
-  print('messages are yummy')
+  pass
 c_error_handler = ERROR_HANDLER_FUNC(py_error_handler)
 
 asound = cdll.LoadLibrary('libasound.so')
@@ -256,5 +256,6 @@ if __name__ == '__main__':
                     print("Network error")
     except KeyboardInterrupt:
         GPIO.cleanup()
+        picam2.close()
         print("Measurement stopped by User")
         
