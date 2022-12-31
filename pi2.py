@@ -165,7 +165,8 @@ if __name__ == '__main__':
                             try:    
                                 pass_check= re.post("http://"+ip+":5000/end_point_3", files={'sound': open('test1.wav', 'rb')}) 
                                 time.sleep(2) 
-                                if(pass_check=="true"):
+                                print("pass_check" + pass_check.text)
+                                if(pass_check.text=="true"):
                                     if("emre" in is_it_truly_us):
                                         print("led1")
                                         GPIO.cleanup()
@@ -208,8 +209,8 @@ if __name__ == '__main__':
                                         
                                         GPIO.setwarnings(False)
                                         time.sleep(1) # Sleep for 1 second
-                                    else:
-                                        print("wrong PASSWORD")  
+                                else:
+                                    print("wrong PASSWORD")  
                             except Exception as e:
                                 print("this expect is !!!!!! ",e)
                     except Exception as e:
