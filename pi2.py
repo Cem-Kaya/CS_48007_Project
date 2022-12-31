@@ -118,16 +118,13 @@ if __name__ == '__main__':
                             
                             GPIO.setmode(GPIO.BCM)
                             GPIO.setup(sound, GPIO.IN)
-                    
-                            GPIO.add_event_detect(sound, GPIO.BOTH, bouncetime=300)
-                            # assign function to GPIO PIN, Run function on change
-                            GPIO.add_event_callback(sound, callback)
-                            print(" is it false",GPIO.input(sound))
-
-                            #infinite loop
-                            while GPIO.input(sound)==0:
-                                print("please make a sound so we know you are ready to say the password")
-                                time.sleep(1)
+                            while True:
+                                if GPIO.input(sound):
+                                    print("Sound Detected!")
+                                    break
+                                    # GPIO.output(led,HIGH)
+                                else:
+                                    print("please make a sound so we will know you are ready")
                             
                             form_1 = pyaudio.paInt16 # 16-bit resolution
                             chans = 1 # 1 channel
