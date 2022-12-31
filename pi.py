@@ -28,7 +28,8 @@ GPIO.setmode(GPIO.BCM)
 #set GPIO Pins
 GPIO_TRIGGER = 18
 GPIO_ECHO = 21
- 
+GPIO_LED1=8
+GPIO_LED2=10
 #set GPIO direction (IN / OUT)
 GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
 GPIO.setup(GPIO_ECHO, GPIO.IN)
@@ -161,8 +162,43 @@ if __name__ == '__main__':
                             wavefile.writeframes(b''.join(frames))
                             wavefile.close()
                             try:    
-                                print( re.post("http://"+ip+":5000/end_point_3", files={'sound': open('test1.wav', 'rb')}) ) 
+                                pass_check= re.post("http://"+ip+":5000/end_point_3", files={'sound': open('test1.wav', 'rb')}) ) 
                                 time.sleep(2) 
+                                if(pass_check=="true"):
+                                    if("emre" in is_it_truly_us):
+                                        print("led1")
+                                        GPIO.setwarnings(False) # Ignore warning for now
+                                        GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
+                                        GPIO.setup(GPIO_LED1, GPIO.OUT, initial=GPIO.LOW) 
+                                        GPIO.output(GPIO_LED1, GPIO.HIGH) # Turn on
+                                        
+
+                                        time.sleep(1) # Sleep for 1 second
+                                    elif("cem" in is_it_truly_us):
+                                        time.sleep(1) # Sleep for 1 second
+                                        GPIO.setwarnings(False) # Ignore warning for now
+                                        GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
+                                        GPIO.setup(GPIO_LED2, GPIO.OUT, initial=GPIO.LOW) # Set pin 8 to be an output pin and >
+                                        GPIO.output(GPIO_LED2, GPIO.HIGH) # Turn on
+                                        GPIO.cleanup()
+                                        time.sleep(1) # Sleep for 1 second
+                                        print("led2")
+                                    elif("onur" in is_it_truly_us):
+                                        time.sleep(1) # Sleep for 1 second
+                                        GPIO.setwarnings(False) # Ignore warning for now
+                                        GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
+                                        GPIO.setup(GPIO_LED1, GPIO.OUT, initial=GPIO.LOW) # Set pin 8 to be an output pin and >
+                                        GPIO.output(GPIO_LED1, GPIO.HIGH) # Turn on
+                                        GPIO.cleanup()
+                                        time.sleep(1) # Sleep for 1 second
+                                        time.sleep(1) # Sleep for 1 second
+                                        GPIO.setwarnings(False) # Ignore warning for now
+                                        GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
+                                        GPIO.setup(GPIO_LED2, GPIO.OUT, initial=GPIO.LOW) # Set pin 8 to be an output pin and >
+                                        GPIO.output(GPIO_LED2, GPIO.HIGH) # Turn on
+                                        GPIO.cleanup()
+                                        time.sleep(1) # Sleep for 1 second
+                                        
                             except Exception as e:
                                 print("this expect is !!!!!! ",e)
                     except Exception as e:
