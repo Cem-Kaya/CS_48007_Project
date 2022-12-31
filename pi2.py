@@ -12,6 +12,26 @@ from PIL import Image
 import pyaudio
 import wave
 ip = "172.22.156.89"
+
+#!/usr/bin/env python
+from ctypes import *
+import pyaudio
+
+# From alsa-lib Git 3fd4ab9be0db7c7430ebd258f2717a976381715d
+# $ grep -rn snd_lib_error_handler_t
+# include/error.h:59:typedef void (*snd_lib_error_handler_t)(const char *file, int line, const char *function, int err, const char *fmt, ...) /* __attribute__ ((format (printf, 5, 6))) */;
+# Define our error handler type
+ERROR_HANDLER_FUNC = CFUNCTYPE(None, c_char_p, c_int, c_char_p, c_int, c_char_p)
+def py_error_handler(filename, line, function, err, fmt):
+  print('messages are yummy')
+c_error_handler = ERROR_HANDLER_FUNC(py_error_handler)
+
+asound = cdll.LoadLibrary('libasound.so')
+# Set error handler
+
+
+
+
 picam2 = Picamera2()
 
 preview_config = picam2.create_preview_configuration(main={"size": (1920, 1080)})
@@ -81,6 +101,7 @@ def distance():
 if __name__ == '__main__':
     try:
         while True:
+            GPIO.cleanup()
             GPIO.setmode(GPIO.BCM)
  
             #set GPIO Pins
@@ -88,7 +109,7 @@ if __name__ == '__main__':
             GPIO_ECHO = 21
             
             #set GPIO direction (IN / OUT)
-            GPIO.cleanup()
+           
             GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
             GPIO.setup(GPIO_ECHO, GPIO.IN)
             print("in the while")
@@ -127,7 +148,9 @@ if __name__ == '__main__':
                                 else:
                                     print("please make a sound so we will know you are ready")
                                     time.sleep(1)
-                            
+                            asound.snd_lib_error_set_handler(c_error_handler)
+
+
                             form_1 = pyaudio.paInt16 # 16-bit resolution
                             chans = 1 # 1 channel
                             samp_rate = 44100 # 44.1kHz sampling rate
@@ -156,6 +179,7 @@ if __name__ == '__main__':
                             stream.stop_stream()
                             stream.close()
                             audio.terminate()
+                            asound.snd_lib_error_set_handler(None)
 
                             # save the audio frames as .wav file
                             wavefile = wave.open(wav_output_filename,'wb')
