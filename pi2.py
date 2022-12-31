@@ -124,10 +124,10 @@ if __name__ == '__main__':
                             GPIO.add_event_callback(sound, callback)
                             print(" is it false",GPIO.input(sound))
 
-                            # infinite loop
-                            #while GPIO.input(sound)==0:
-                                #print("please make a sound so we know you are ready to say the password")
-                                #time.sleep(1)
+                            #infinite loop
+                            while GPIO.input(sound)==0:
+                                print("please make a sound so we know you are ready to say the password")
+                                time.sleep(1)
                             
                             form_1 = pyaudio.paInt16 # 16-bit resolution
                             chans = 1 # 1 channel
