@@ -223,5 +223,6 @@ if __name__ == '__main__':
                 except:
                     print("Network error")
     except KeyboardInterrupt:
+        GPIO.cleanup()
         print("Measurement stopped by User")
         
