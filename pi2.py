@@ -88,6 +88,7 @@ if __name__ == '__main__':
             GPIO_ECHO = 21
             
             #set GPIO direction (IN / OUT)
+            GPIO.cleanup()
             GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
             GPIO.setup(GPIO_ECHO, GPIO.IN)
             print("in the while")
@@ -125,6 +126,7 @@ if __name__ == '__main__':
                                     # GPIO.output(led,HIGH)
                                 else:
                                     print("please make a sound so we will know you are ready")
+                                    time.sleep(1)
                             
                             form_1 = pyaudio.paInt16 # 16-bit resolution
                             chans = 1 # 1 channel
