@@ -23,6 +23,7 @@ picam2.start()
 
 #GPIO Mode (BOARD / BCM)
 GPIO.cleanup()
+GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
  
 #set GPIO Pins
@@ -31,6 +32,7 @@ GPIO_ECHO = 21
 GPIO_LED1=8
 GPIO_LED2=10
 #set GPIO direction (IN / OUT)
+GPIO.setwarnings(False)
 GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
 GPIO.setup(GPIO_ECHO, GPIO.IN)
 def callback(sound):
@@ -105,16 +107,18 @@ if __name__ == '__main__':
                     try:
                         if("emre" in is_it_truly_us or "cem" in is_it_truly_us or "onur" in is_it_truly_us  ):
                             print("welcome: ", is_it_truly_us, " now we will take the password please wait ")
+                            GPIO.setwarnings(False)
                             GPIO.cleanup()
+                            GPIO.setwarnings(False)
                             print("in second while")
-                            sound = 17
-                            led = 27
+                            sound = 15
+                            
                             
                            
                             GPIO.cleanup()
                             GPIO.setmode(GPIO.BCM)
                             GPIO.setup(sound, GPIO.IN)
-                            GPIO.setup(led, GPIO.OUT)
+                    
                             GPIO.add_event_detect(sound, GPIO.BOTH, bouncetime=300)
                             # assign function to GPIO PIN, Run function on change
                             GPIO.add_event_callback(sound, callback)
@@ -167,6 +171,7 @@ if __name__ == '__main__':
                                 if(pass_check=="true"):
                                     if("emre" in is_it_truly_us):
                                         print("led1")
+                                        GPIO.cleanup()
                                         GPIO.setwarnings(False) # Ignore warning for now
                                         GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
                                         GPIO.setup(GPIO_LED1, GPIO.OUT, initial=GPIO.LOW) 
@@ -181,6 +186,7 @@ if __name__ == '__main__':
                                         GPIO.setup(GPIO_LED2, GPIO.OUT, initial=GPIO.LOW) # Set pin 8 to be an output pin and >
                                         GPIO.output(GPIO_LED2, GPIO.HIGH) # Turn on
                                         GPIO.cleanup()
+                                        GPIO.setwarnings(False)
                                         time.sleep(1) # Sleep for 1 second
                                         print("led2")
                                     elif("onur" in is_it_truly_us):
@@ -190,6 +196,7 @@ if __name__ == '__main__':
                                         GPIO.setup(GPIO_LED1, GPIO.OUT, initial=GPIO.LOW) # Set pin 8 to be an output pin and >
                                         GPIO.output(GPIO_LED1, GPIO.HIGH) # Turn on
                                         GPIO.cleanup()
+                                        GPIO.setwarnings(False)
                                         time.sleep(1) # Sleep for 1 second
                                         time.sleep(1) # Sleep for 1 second
                                         GPIO.setwarnings(False) # Ignore warning for now
@@ -197,8 +204,10 @@ if __name__ == '__main__':
                                         GPIO.setup(GPIO_LED2, GPIO.OUT, initial=GPIO.LOW) # Set pin 8 to be an output pin and >
                                         GPIO.output(GPIO_LED2, GPIO.HIGH) # Turn on
                                         GPIO.cleanup()
+                                        GPIO.setwarnings(False)
                                         time.sleep(1) # Sleep for 1 second
-                                        
+                                    else:
+                                        print("wrong PASSWORD")  
                             except Exception as e:
                                 print("this expect is !!!!!! ",e)
                     except Exception as e:
