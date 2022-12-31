@@ -169,10 +169,11 @@ if __name__ == '__main__':
                                 if(pass_check.text=="true"):
                                     if("emre" in is_it_truly_us):
                                         print("led1")
-                                        GPIO.cleanup()
+                                        #GPIO.cleanup()
                                         time.sleep(1)
                                         GPIO.setwarnings(False) # Ignore warning for now
                                         GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
+                                        GPIO.setup(GPIO_LED2, GPIO.OUT, initial=GPIO.LOW) 
                                         GPIO.setup(GPIO_LED1, GPIO.OUT, initial=GPIO.LOW) 
                                         GPIO.output(GPIO_LED1, GPIO.HIGH) # Turn on
                                         print("led1")
@@ -181,9 +182,10 @@ if __name__ == '__main__':
                                     elif("cem" in is_it_truly_us):
                                         time.sleep(1) # Sleep for 1 second
                                         print("led starting")
-                                        GPIO.cleanup()
+                                        #GPIO.cleanup()
                                         GPIO.setwarnings(False) # Ignore warning for now
                                         print("led cont2")
+                                        GPIO.setup(GPIO_LED1, GPIO.OUT, initial=GPIO.LOW) 
                                         GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
                                         print("led cont3")
                                         GPIO.setup(GPIO_LED2, GPIO.OUT, initial=GPIO.LOW) # Set pin 8 to be an output pin and >
