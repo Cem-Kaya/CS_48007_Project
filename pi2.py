@@ -234,16 +234,14 @@ if __name__ == '__main__':
                                         GPIO.setup(GPIO_LED1, GPIO.OUT, initial=GPIO.LOW) # Set pin 8 to be an output pin and >
                                         GPIO.output(GPIO_LED1, GPIO.HIGH) # Turn on
                                         
-                                        GPIO.setwarnings(False)
+                                    
                                         
                                         time.sleep(1) # Sleep for 1 second
-                                        GPIO.setwarnings(False) # Ignore warning for now
-                                        GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
                                         GPIO.setup(GPIO_LED2, GPIO.OUT, initial=GPIO.LOW) # Set pin 8 to be an output pin and >
                                         GPIO.output(GPIO_LED2, GPIO.HIGH) # Turn on
                                         print("now you can see your led, ", is_it_truly_us)
                                         GPIO.setwarnings(False)
-                                        time.sleep(1) # Sleep for 1 second
+                                        time.sleep(10) # Sleep for 1 second
                                 else:
                                     print("wrong PASSWORD , it was password ")  
                             except Exception as e:
