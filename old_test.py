@@ -12,26 +12,6 @@ from PIL import Image
 import pyaudio
 import wave
 ip = "172.22.156.89"
-
-#!/usr/bin/env python
-from ctypes import *
-import pyaudio
-
-# From alsa-lib Git 3fd4ab9be0db7c7430ebd258f2717a976381715d
-# $ grep -rn snd_lib_error_handler_t
-# include/error.h:59:typedef void (*snd_lib_error_handler_t)(const char *file, int line, const char *function, int err, const char *fmt, ...) /* __attribute__ ((format (printf, 5, 6))) */;
-# Define our error handler type
-ERROR_HANDLER_FUNC = CFUNCTYPE(None, c_char_p, c_int, c_char_p, c_int, c_char_p)
-def py_error_handler(filename, line, function, err, fmt):
-  pass
-c_error_handler = ERROR_HANDLER_FUNC(py_error_handler)
-
-asound = cdll.LoadLibrary('libasound.so')
-# Set error handler
-
-
-
-
 picam2 = Picamera2()
 
 preview_config = picam2.create_preview_configuration(main={"size": (1920, 1080)})
@@ -42,7 +22,7 @@ picam2.start_preview(Preview.QTGL)
 picam2.start()
 
 #GPIO Mode (BOARD / BCM)
-
+GPIO.cleanup()
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
  
@@ -101,7 +81,6 @@ def distance():
 if __name__ == '__main__':
     try:
         while True:
-            GPIO.cleanup()
             GPIO.setmode(GPIO.BCM)
  
             #set GPIO Pins
@@ -109,13 +88,13 @@ if __name__ == '__main__':
             GPIO_ECHO = 21
             
             #set GPIO direction (IN / OUT)
-           
             GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
             GPIO.setup(GPIO_ECHO, GPIO.IN)
+            print("in the while")
             dist = distance()
             print ("Measured Distance = %.1f cm" % dist)
             time.sleep(1)
-            if(dist<25):
+            if(dist<50):
                 picam2.capture_file("tmp.jpg")
                 time.sleep(5) 
                 try:    
@@ -128,33 +107,33 @@ if __name__ == '__main__':
                     try:
                         if("emre" in is_it_truly_us or "cem" in is_it_truly_us or "onur" in is_it_truly_us  ):
                             print("welcome: ", is_it_truly_us, " now we will take the password please wait ")
-                            #GPIO.setwarnings(False)
-                            
                             GPIO.setwarnings(False)
-                          
+                            GPIO.cleanup()
+                            GPIO.setwarnings(False)
+                            print("in second while")
                             sound = 15
                             
                             
                            
-                            
+                            GPIO.cleanup()
                             GPIO.setmode(GPIO.BCM)
                             GPIO.setup(sound, GPIO.IN)
-                            while True:
-                                if GPIO.input(sound):
-                                    print("Sound Detected now we will record you for your password!")
-                                    break
-                                    # GPIO.output(led,HIGH)
-                                else:
-                                    print("please make a sound so we will know you are ready")
-                                    time.sleep(1)
-                            asound.snd_lib_error_set_handler(c_error_handler)
+                    
+                            GPIO.add_event_detect(sound, GPIO.BOTH, bouncetime=300)
+                            # assign function to GPIO PIN, Run function on change
+                            GPIO.add_event_callback(sound, callback)
+                            print(" is it false",GPIO.input(sound))
 
-
+                            # infinite loop
+                            #while GPIO.input(sound)==0:
+                                #print("please make a sound so we know you are ready to say the password")
+                                #time.sleep(1)
+                            GPIO.cleanup()
                             form_1 = pyaudio.paInt16 # 16-bit resolution
                             chans = 1 # 1 channel
                             samp_rate = 44100 # 44.1kHz sampling rate
                             chunk = 4096 # 2^12 samples for buffer
-                            record_secs = 20 # seconds to record
+                            record_secs = 18 # seconds to record
                             dev_index = 1# device index found by p.get_device_info_by_index(ii)
                             wav_output_filename = 'test1.wav' # name of .wav file
 
@@ -178,7 +157,6 @@ if __name__ == '__main__':
                             stream.stop_stream()
                             stream.close()
                             audio.terminate()
-                            asound.snd_lib_error_set_handler(None)
 
                             # save the audio frames as .wav file
                             wavefile = wave.open(wav_output_filename,'wb')
@@ -190,72 +168,53 @@ if __name__ == '__main__':
                             try:    
                                 pass_check= re.post("http://"+ip+":5000/end_point_3", files={'sound': open('test1.wav', 'rb')}) 
                                 time.sleep(2) 
-                                
-                                if(pass_check.text=="true"):
+                                if(pass_check=="true"):
                                     if("emre" in is_it_truly_us):
                                         print("led1")
-                                        
-                                        
-                                        GPIO.setwarnings(False) # Ignore warning for now
                                         GPIO.cleanup()
-                                        time.sleep(1)
+                                        GPIO.setwarnings(False) # Ignore warning for now
                                         GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
-                                        GPIO.setup(GPIO_LED2, GPIO.OUT, initial=GPIO.LOW) 
                                         GPIO.setup(GPIO_LED1, GPIO.OUT, initial=GPIO.LOW) 
                                         GPIO.output(GPIO_LED1, GPIO.HIGH) # Turn on
-                                        print("now you can see your led, ", is_it_truly_us)
-                                        time.sleep(10)
+                                        
 
-                                        time.sleep(10) # Sleep for 1 second
+                                        time.sleep(1) # Sleep for 1 second
                                     elif("cem" in is_it_truly_us):
                                         time.sleep(1) # Sleep for 1 second
-                                        
                                         GPIO.setwarnings(False) # Ignore warning for now
-                                        GPIO.cleanup()
-                                        time.sleep(1)
                                         GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
-                                        GPIO.setup(GPIO_LED1, GPIO.OUT, initial=GPIO.LOW) 
-                                       
-                                        
                                         GPIO.setup(GPIO_LED2, GPIO.OUT, initial=GPIO.LOW) # Set pin 8 to be an output pin and >
-                                      
                                         GPIO.output(GPIO_LED2, GPIO.HIGH) # Turn on
-                                        
+                                        GPIO.cleanup()
                                         GPIO.setwarnings(False)
-                                        print("now you can see your led, ", is_it_truly_us)
-                                        time.sleep(10) # Sleep for 1 second
-                                       
+                                        time.sleep(1) # Sleep for 1 second
+                                        print("led2")
                                     elif("onur" in is_it_truly_us):
                                         time.sleep(1) # Sleep for 1 second
                                         GPIO.setwarnings(False) # Ignore warning for now
-                                        GPIO.cleanup()
-                                        time.sleep(1) # Sleep for 1 second
                                         GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
                                         GPIO.setup(GPIO_LED1, GPIO.OUT, initial=GPIO.LOW) # Set pin 8 to be an output pin and >
                                         GPIO.output(GPIO_LED1, GPIO.HIGH) # Turn on
-                                        
-                                    
-                                        
+                                        GPIO.cleanup()
+                                        GPIO.setwarnings(False)
                                         time.sleep(1) # Sleep for 1 second
+                                        time.sleep(1) # Sleep for 1 second
+                                        GPIO.setwarnings(False) # Ignore warning for now
+                                        GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
                                         GPIO.setup(GPIO_LED2, GPIO.OUT, initial=GPIO.LOW) # Set pin 8 to be an output pin and >
                                         GPIO.output(GPIO_LED2, GPIO.HIGH) # Turn on
-                                        print("now you can see your led, ", is_it_truly_us)
+                                        GPIO.cleanup()
                                         GPIO.setwarnings(False)
-                                        time.sleep(10) # Sleep for 1 second
-                                else:
-                                    print("wrong PASSWORD , it was password ")  
+                                        time.sleep(1) # Sleep for 1 second
+                                    else:
+                                        print("wrong PASSWORD")  
                             except Exception as e:
-                                print("this expect is !!!",e)
-                        else:
-                            print("I do not know you , you have not been registered")
-                            GPIO.cleanup()
+                                print("this expect is !!!!!! ",e)
                     except Exception as e:
-                        print("expection is ....", e)
+                        print("expection is ..... ", e)
                             
                 except:
                     print("Network error")
     except KeyboardInterrupt:
-        GPIO.cleanup()
-        picam2.close()
         print("Measurement stopped by User")
-        
+        GPIO.cleanup()
