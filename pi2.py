@@ -115,7 +115,7 @@ if __name__ == '__main__':
             dist = distance()
             print ("Measured Distance = %.1f cm" % dist)
             time.sleep(1)
-            if(dist<50):
+            if(dist<25):
                 picam2.capture_file("tmp.jpg")
                 time.sleep(5) 
                 try:    
@@ -154,7 +154,7 @@ if __name__ == '__main__':
                             chans = 1 # 1 channel
                             samp_rate = 44100 # 44.1kHz sampling rate
                             chunk = 4096 # 2^12 samples for buffer
-                            record_secs = 8 # seconds to record
+                            record_secs = 20 # seconds to record
                             dev_index = 1# device index found by p.get_device_info_by_index(ii)
                             wav_output_filename = 'test1.wav' # name of .wav file
 
